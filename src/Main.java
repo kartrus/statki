@@ -17,7 +17,6 @@ public class Main {
         board.setLength(setTheSizeOfTheBoard("Length:"));
         board.setWidth(setTheSizeOfTheBoard("Width:"));
         board.initBoard();
-        //todo add ships
         board.addRandomShips(5,4);
         board.randomDistributeShipsOnBoard();
     }
@@ -26,7 +25,6 @@ public class Main {
         String stringValue;
 
         while(true){
-            //shoot or end
             System.out.println("To shot[s] to end[e]:");
             stringValue = scan.nextLine();
             if(stringValue.equals("e")){
@@ -36,6 +34,10 @@ public class Main {
                 board.shoot();
                 board.showStats();
                 board.showBoard();
+            }
+            if(board.isSunkAll()){
+                System.out.println("You win!");
+                return;
             }
         }
     }

@@ -32,7 +32,7 @@ public class Board {
     }
 
     public void setLength(Integer length) {
-        this.length = length;//todo zabezpieczyc
+        this.length = length;
     }
 
     public Integer getWidth() {
@@ -40,7 +40,7 @@ public class Board {
     }
 
     public void setWidth(Integer width) {
-        this.width = width;//todo zabezpieczyc
+        this.width = width;
     }
 
     public void showBoard() {
@@ -72,7 +72,7 @@ public class Board {
 
     public void addRandomShips(Integer quantity, Integer maxSize) {
         for (int i = 0; i < quantity; i++) {
-            ships.add((int) (Math.random() * maxSize-1)+1);
+            addShip((int) (Math.random() * maxSize-1)+1);
         }
     }
 
@@ -81,45 +81,35 @@ public class Board {
         for (Integer ship : ships) {
             int fail = 0;
             while (fail < 5) {
-                //randomNum = minimum + (int)(Math.random() * maximum);
-                //random pozioma wsp
                 Integer randomWidthCoordinate = (int) (Math.random() * (width - ship));
-                //random pionowa wsp
                 Integer randomLengthCoordinate = (int) (Math.random() * (length - ship));
-                //random poziom/pion //0-hor/1-vert
                 boolean isHorizontal = (((int) (Math.random() * 2)) == 1);
                 boolean spaceForShip = true;
                 for (int i = 0; i < ship; i++) {
                     if (isHorizontal) {
-                        //poziom
                         if (shipBoard[randomLengthCoordinate][randomWidthCoordinate + i].equals("*")) {
                             spaceForShip = false;
                             break;
                         }
                     } else {
-                        //pion
                         if (shipBoard[randomLengthCoordinate + i][randomWidthCoordinate].equals("*")) {
                             spaceForShip = false;
                             break;
                         }
                     }
                 }
-                //tak wstaw
+
                 if (spaceForShip) {
                     for (int i = 0; i < ship; i++) {
                         if (isHorizontal) {
-                            //poziom
                             shipBoard[randomLengthCoordinate][randomWidthCoordinate + i] = "*";
                         } else {
-                            //pion
                             shipBoard[randomLengthCoordinate + i][randomWidthCoordinate] = "*";
                         }
                     }
                     break;
                 }
-                //nie fail++
                 fail++;
-                //if fail >=5 then break
                 if (fail >= 5) {
                     System.out.println("Failed to set Ship length: " + ship);
                     break;
@@ -149,10 +139,6 @@ public class Board {
         Integer lengthCoordinate = getLengthCoordinate();
         Integer widthCoordinate = getWidthCoordinate();
 
-        //jak . daj o
-        //do statów ze pudlo
-        //jak * daj x
-        //do statów ze trafiony
         if (shipBoard[lengthCoordinate][widthCoordinate].equals("*")) {
             playerBoard[lengthCoordinate][widthCoordinate] = "x";
             hit++;
@@ -161,7 +147,6 @@ public class Board {
             miss++;
         }
 
-        //zatopiony? moze kiedyś
     }
 
     public Integer getWidthCoordinate() {
@@ -185,7 +170,7 @@ public class Board {
             }
             sample++;
         }
-        return null;//todo zabezpieczyc
+        return null;
     }
 
     public void showStats() {
@@ -195,6 +180,10 @@ public class Board {
         System.out.println("hits: "+hit);
         System.out.println("miss: "+miss);
         System.out.println("====================");
+    }
+
+    public boolean isSunkAll(){
+        return hit == shipsArea;
     }
 }
 
